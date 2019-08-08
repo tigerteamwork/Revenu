@@ -1,11 +1,10 @@
 trigger BuxBalanceTrigger on BuxBalance__c (before insert) {
     
-    // call handler 
-    // BuxBalanceHandler myHandler = new BuxBalanceHandler();
-    
     for (BuxBalance__c bb : trigger.new) {       
         validateInput(bb);
     }    
+    
+    
     
     public void validateInput(BuxBalance__c bb) {
         if (bb.balanceTotal__c == null) {
@@ -27,10 +26,5 @@ trigger BuxBalanceTrigger on BuxBalance__c (before insert) {
         if (bb.Balance_Being_Special__c == null) {
             bb.Balance_Being_Special__c = 0;
         }
-        
     }
-    
-    
-    
-    
 }

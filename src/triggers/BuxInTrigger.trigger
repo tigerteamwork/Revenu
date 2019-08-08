@@ -1,5 +1,4 @@
 trigger BuxInTrigger on BuxIn__c (before insert, before update, before delete) {
-    
     // if isInsert
     if (trigger.isInsert) {
         for (BuxIn__c bb : trigger.new) {        
@@ -12,17 +11,20 @@ trigger BuxInTrigger on BuxIn__c (before insert, before update, before delete) {
     if (trigger.isUpdate) {
         for (BuxIn__c bb : trigger.new) {        
             validateInput(bb);
-            // todo    
-            // currently user cannot update
+            // add in the new incomce numbers
+            BuxHelperClass.addBuxIn(bb.Working_Hard__c, bb.Im_Special__c, userInfo.getUserId(), bb.Date__c);     
         }   
+        for (BuxIn__c bb : trigger.old) {
+            // add back the negative of the old income numbers
+            BuxHelperClass.addBuxIn(-bb.Working_Hard__c, -bb.Im_Special__c, userInfo.getUserId(), bb.Date__c);  
+        }
     }
     
     // if isDelete
     if (trigger.isDelete) {
-        for (BuxIn__c bb : trigger.old) {        
-            // validateInput(bb);
-            // todo    
-            // currently user cannot delete  
+        for (BuxIn__c bb : trigger.old) {
+            // add back the negative of the old income numbers
+            BuxHelperClass.addBuxIn(-bb.Working_Hard__c, -bb.Im_Special__c, userInfo.getUserId(), bb.Date__c);     
         }   
     }
     

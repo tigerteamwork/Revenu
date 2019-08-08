@@ -105,7 +105,8 @@ public class BuxHelperClass {
             //bb.Id = null;            
         }
         // insert list (1 record)
-        update tempListMostRecentBuxBalance;
+        // update tempListMostRecentBuxBalance;
+         
         //delete old BuxBox records 
         List<BuxBox__c> tempListMostRecentBuxBox = [SELECT Id FROM BuxBox__c WHERE OwnerId = :argId ORDER BY LastModifiedDate];
         delete tempListMostRecentBuxBox;

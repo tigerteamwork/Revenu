@@ -1,28 +1,10 @@
-trigger BuxBoxTrigger on BuxBox__c (before insert, before update, before delete) {
+trigger BuxBoxTrigger on BuxBox__c (before insert) {
     
     // if isInsert
     if (trigger.isInsert) {
         for (BuxBox__c bb : trigger.new) {        
             validateInput(bb);
             BuxHelperClass.setNewBoxSize(bb.BudgetLifeOrDeath__c, bb.BudgetYOLO__c, userInfo.getUserId());          
-        }   
-    }
-    
-    // if isUpdate
-    if (trigger.isUpdate) {
-        for (BuxBox__c bb : trigger.new) {        
-            validateInput(bb);
-            // todo    
-            // currently user cannot update
-        }   
-    }
-    
-    // if isDelete
-    if (trigger.isDelete) {
-        for (BuxBox__c bb : trigger.old) {        
-            // validateInput(bb);
-            // todo    
-            // currently user cannot delete  
         }   
     }
     

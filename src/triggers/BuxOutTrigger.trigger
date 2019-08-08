@@ -10,23 +10,22 @@ trigger BuxOutTrigger on BuxOut__c (before insert, before update, before delete)
     
     // if isUpdate
     if (trigger.isUpdate) {
-        for (BuxOut__c bb : trigger.new) {        
+        for (BuxOut__c bb : trigger.new) {   
             validateInput(bb);
-            // check if BuxOut is for current month
-            // if (bb.Date__c.month() == Date.today().month() ) {}
-            // todo    
-            // currently user cannot update
+            // subtract out the new expense numbers
+            BuxHelperClass.subtractBoxOut (bb.LifeOrDeath__c, bb.YOLO__c, userInfo.getUserId(), bb.Date__c);
         }   
+        for (BuxOut__c bb : trigger.old) { 
+            // subtract out the negative of the old expense numbers 
+            BuxHelperClass.subtractBoxOut (-bb.LifeOrDeath__c, -bb.YOLO__c, userInfo.getUserId(), bb.Date__c);
+        }  
     }
     
     // if isDelete
     if (trigger.isDelete) {
-        for (BuxOut__c bb : trigger.old) {        
-            // validateInput(bb);
-            // check if BuxOut is for current month
-            // if (bb.Date__c.month() == Date.today().month() ) {}
-            // todo    
-            // currently user cannot delete  
+        for (BuxOut__c bb : trigger.old) { 
+            // subtract out the negative of the old expense numbers 
+            BuxHelperClass.subtractBoxOut (-bb.LifeOrDeath__c, -bb.YOLO__c, userInfo.getUserId(), bb.Date__c);
         }   
     }
     
